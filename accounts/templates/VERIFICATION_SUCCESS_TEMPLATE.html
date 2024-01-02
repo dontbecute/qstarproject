@@ -1,0 +1,22 @@
+{% extends "shop/base/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="container">
+	<div class="row text-center">
+        <div class="col-sm-6 col-sm-offset-3">
+        <br><br> <h2 style="color:#0fad00">نجاح</h2>
+        <i class="icon-smile"></i>
+        <h3>شكرًا</h3>
+        <p style="font-size:20px;color:#5C5C5C;">
+               تساعدنا هذه العملية على التأكد والتحقق من الحسابات الصحيحة وتقديم ميزات حصرية للحسابات الموثقة يمكنك الأن تسجيل الدخول إلى حسابك
+        </p>
+        <a href="{% url 'accounts:login' %}" class="btn btn-success">     تسجيل الدخول      </a>
+    <br><br>
+        </div>
+	</div>
+</div>
+
+{% endblock %}

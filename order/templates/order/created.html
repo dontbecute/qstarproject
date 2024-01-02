@@ -1,0 +1,11 @@
+{% extends "shop/base/base.html" %}
+{% block title %}
+شكراً
+{% endblock %}
+{% block content %}
+<div class="container text-center mt-5 mb-5">
+    <h1>شكراً لك</h1>
+    <h3>لقد تم إكمال طلبك بنجاح. رقم الطلب الخاص بك هو
+    <strong>{{ order.id }}</strong>.</h3>
+</div>
+{% endblock %}

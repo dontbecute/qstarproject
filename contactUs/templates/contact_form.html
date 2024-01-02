@@ -1,0 +1,15 @@
+{% extends "shop/base/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+اتصل بنا
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">أرسل رسالة</h1>
+    <form action="." method="post" class="order-form">
+        {{ form|crispy }}
+        <p><input class="btn btn-primary btn-sm btn-block" type="submit" value="ارسال"></p>
+        {% csrf_token %}
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends "shop/base/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+الدفع
+{% endblock %}
+{% block content %}
+
+
+{% if cart.get_total_price == 0 %}
+<div> ARE YOU STUPED ? do not paly with URLS you are NOT a hacker!</div>
+
+<div>
+  لا تستطيع عرض هذه الصفحة سلتك فارغة 
+</div>
+
+{% else %}
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+          <div class="card">
+            <div class="card-body">
+              <div class="row d-flex justify-content-center pb-5">
+                <div class="col-md-7 col-xl-5 mb-4 mb-md-0">
+                  <div class="py-4 d-flex flex-row">
+                    <h5><span class="far fa-check-square pe-2"></span><b>Q*</b> |</h5>
+                    <span class="ps-2"> Pay</span>
+                  </div>
+                  <h4 style="text-align: right;">فاتورة المدفوعات
+                    <span class="text-success" >{{ cart.get_total_price }}</h4>
+
+                  </h4>
+                  <div class="d-right pt-2" style="text-align: right;">
+                    <div style="right: 0;">
+                      <p style="text-align: right;">
+                        <b style="text-align: right;">مسؤولين عن أي خطأ  
+                          <span class="text-success" style="text-align: right;" >تقني من قبلنا</span>
+                        </b>
+                      </p>
+                    </div>
+                  </div>
+                  <p style="text-align: right;">
+                    يجب عليك دفع الفاتورة عن طريق سيرياتيل كاش على رقم الحساب المبين أدناه قبل إرسالها إلينا 
+                  </p>
+                  <div class="rounded d-flex" style="background-color: #f8f9fa;" >
+                    <div class="ms-auto p-2 text-success"  >0933849372</div>
+                  </div>
+                  <hr />
+                  <div class="pt-2">
+                    <h4 class="text-success"  style="text-align: right;">ملاحظات</h4>
+
+                    <p style="text-align: right;">
+                     هذه فاتورة طلبك ( غير المدفوعة ). بمجرد انتهاء المراجعة من قبلنا، والتأكد من قيامك بالدفع سيتم إعلامك عن طريق إشعار وايصال طلبك بأسرع وقت
+                    </p>
+                    <p style="text-align: right;">
+                       يرجى الملاحظة أنه في حال إدخالك رقم حسابنا بشكل خاطئ على تطبيق سيرياتيل كاش لن تتمكن من استعادة دفعتك 
+                    </p>
+                    <p style="text-align: right;">
+                      يرجى الملاحظة أنه في حال إدخالك رقم حساب سيرياتيل كاش بشكل خاطئ على موقعنا لن نتمكن من التحقق من صحة دفعك وستفقد صلاحية استعادة أموالك
+                   </p>
+                   <p style="text-align: right;">
+                    نوصي بتحديد موقعك بشكل صحيح ودقيق باستخدام الخريطة في الأسفل يمكنك مراجعتنا في حال ورود أي خطأ قبل الانتهاء من عملية الشحن
+                  </p>
+                         <form action="." method="post" class="order-form " class="pb-3">
+                            {{ form|crispy }}
+                            <p><input class="btn btn-primary btn-sm btn-block" type="submit" value="تأكيد الطلب"></p>
+                            {% csrf_token %}
+                        </form>
+                  </div>
+                </div>
+      
+                <div class="col-md-5 col-xl-4 offset-xl-1">
+                  <div class="py-4 d-flex justify-content-end">
+                    <h6><a href="{% url 'shop:product_list' %}" style="text-align: center;">الغاء والعودة إلى الموقع</a></h6>
+                  </div>
+
+                  <div class="rounded d-right flex-column p-2 align-items-end" style="background-color: #f8f9fa; text-align: right;">
+                    <div class="p-2 me-3">
+                        <h4>خلاصة الطلب</h4>
+                    </div>
+                    {% for item in cart %}
+                        <div class="p-2 d-flex">
+                            <div class="ms-auto">{{ item.product.name }}</div>
+                            <div class="col-8">المنتج</div>
+                        </div>
+                        <div class="p-2 d-flex">
+                            <div class="ms-auto">{{ item.quantity }}
+                                <div class="border-top px-2 mx-2"></div>
+                            </div>
+                            <div class="col-8">الكمية</div>
+                        </div>
+                        <div class="border-top px-2 mx-2"></div>
+                    {% endfor %}
+                
+                    <div class="border-top px-2 mx-2"></div>
+                
+                    <div class="p-2 d-flex pt-3">
+                        <div class="ms-auto"><b class="text-success">{{ cart.get_total_price }}</b></div>
+                        <div class="col-8"><b>الإجمالي</b></div>
+                    </div>
+                </div>
+                <div class="border-top px-2 mx-2" style="margin-bottom: 10px;"></div>
+
+                <div id="myMap" style="position:relative;width:100%;min-width:290px;height:400px;background-color:gray"></div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script>
+ 
+
+        var latitudeField = document.getElementById('id_latitude');
+        var longitudeField = document.getElementById('id_longitude');
+  
+        var defaultLatitude = 35.4346455; // Default latitude (e.g., San Francisco)
+        var defaultLongitude = 35.9236800; // Default longitude
+        var defaultZoomLevel = 15; 
+  
+        var map;
+  
+  function GetMap()
+  {
+      map = new Microsoft.Maps.Map('#myMap', {
+          center: new Microsoft.Maps.Location(defaultLatitude, defaultLongitude),
+          zoom: 14, // Set your desired default zoom level here
+          mapTypeId: Microsoft.Maps.MapTypeId.aerial
+      });
+  
+      var layer = new Microsoft.Maps.Layer();
+  
+      var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(35.43470719740512, 35.92369356509548), { title: 'sample text' });
+      layer.add(pushpin);
+  
+      var polyline = new Microsoft.Maps.Polyline(
+      [
+      new Microsoft.Maps.Location(35.44433352236767, 35.91912848923575),
+      new Microsoft.Maps.Location(35.44413685937368, 35.92282190025162 ),
+      new Microsoft.Maps.Location(35.44822274580944, 35.925678142676475 ),
+      new Microsoft.Maps.Location(35.446020200755925, 35.927695268888655 ),
+  
+      new Microsoft.Maps.Location(35.43820126112089, 35.93111293956468 ),
+      new Microsoft.Maps.Location(35.43391977760632, 35.92871212708738),
+      new Microsoft.Maps.Location(35.431641052212655, 35.923522407897785),
+      new Microsoft.Maps.Location(35.43470067325988, 35.9197238445986 ),
+      new Microsoft.Maps.Location(35.441968664330155, 35.91004478870707),
+      new Microsoft.Maps.Location(35.44433352236767, 35.91912848923575),
+  
+      ], { strokeColor: 'blue', strokeThickness: 3 });
+      layer.add(polyline);
+      
+      map.layers.insert(layer);
+      Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
+          var location = e.location;
+          if (pushpin) {
+              layer.remove(pushpin);
+          }
+  
+          pushpin = new Microsoft.Maps.Pushpin(location, { title: 'الموقع المحدد' });
+          layer.add(pushpin);
+  
+          console.log('Selected Location:', location);
+          
+          latitudeField.value = location.latitude;
+          longitudeField.value =location.longitude;
+      });
+  }
+  
+  (async () => {
+              let script = document.createElement("script");
+              script.setAttribute("src", `https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=Ati-aHtMOQ5M8sKthiDb4bv6XTA_CRrP5rg_94BRpVPn1RD1r8W5ynxfkP3-d5OI`);
+              document.body.appendChild(script);
+          })();
+    </script>
+  </div>
+{% endif %}
+
+
+{% endblock %}

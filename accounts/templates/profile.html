@@ -1,0 +1,90 @@
+{% extends "shop/base/base.html" %}
+
+
+{% block content %}
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#">الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="#">مستخدم</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ملف شخصي</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3">{{ user_profile.first_name }} {{ user_profile.last_name }}</h5>
+            <p class="text-muted mb-4">welcome {{ user_profile.first_name }}</p>
+            <div class="d-flex justify-content-center mb-2">
+
+              {% if user.is_authenticated %}
+              <form method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary ms-1">تسجيل خروج</button>
+              </form>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush rounded-3">
+              <li class="list-group-item d-flex justify-content-center align-items-center p-3">
+                <a href="{% url 'accounts:profile_update' username=user.username %}">
+                  <button type="submit" class="btn btn-outline-primary ms-1">تعديل الملف الشخصي </button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="text-muted mb-0"> {{ user_profile.first_name }} {{ user_profile.last_name }}</p>
+
+              </div>
+              <div class="col-sm-9">
+                <p class="mb-0" style="text-align: right;">الاسم</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="text-muted mb-0">{{user_profile.email}}</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="mb-0" style="text-align: right;">البريد</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="text-muted mb-0">{{user_profile.phone_number}}</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="mb-0" style="text-align: right;">رقم الهاتف</p>
+              </div>
+            </div>
+            <hr>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+    <header class="site-navbar" role="banner">
+        <div class="site-navbar-top">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+                            <form method="get" action="{% url 'shop:search' %}" class="site-block-top-search">
+                                <div class="input-group">
+                                    
+
+                                    <div class="form-outline" data-mdb-input-init>
+                                        <input type="search" class="form-control border-0" placeholder="البحث" name="q">
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                    </div>
+                    <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                        <div>
+                            <a href="{% url 'shop:product_list' %}" class="js-logo-clone" style="font-size: larger; color: green; font-weight: bold;">Q *
+                                
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                        <div class="site-top-icons">
+                            <ul>
+                                {% if user.is_authenticated %}
+                                <!-- templates/some_template.html -->
+                                <li><a href="{% url 'accounts:profile' username=user.username %}"><span class="icon icon-person"></span></a></li>
+
+                                {% else  %}
+                                <li><a href="{% url 'accounts:login' %}"><span class="icon icon-person"></span></a></li>
+
+                                {% endif %}
+
+  
+
+                                <li>
+                                    <a href="{% url "cart:cart_detail" %}" class="site-cart">
+                                        <span class="icon icon-shopping_cart"></span>
+                                        <span class="count">
+                                        {% with total_items=cart|length %}
+                                            {% if cart|length > 0 %}
+                                                {{ total_items|pluralize }}
+                                            {% else %}
+                                                0
+                                            {% endif %}
+                                        {% endwith %}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="d-inline-block d-md-none ml-md-0"><a href="#"
+                                        class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <nav class="site-navigation text-right text-md-center" role="navigation">
+            <div class="container">
+                <ul class="site-menu js-clone-nav d-none d-md-block">
+                    <li><a href="{% url 'shop:product_list' %}">تسوق</a></li>
+                    <li><a href="{% url 'about:about_us' %}">حول</a></li>
+                    <li><a href="{% url 'contactUs:contact_us' %}">اتصل بنا</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
